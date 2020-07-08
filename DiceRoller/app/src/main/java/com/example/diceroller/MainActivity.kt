@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private fun rollDice(){
 //        Toast.makeText(this, "button clicked", Toast.LENGTH_SHORT).show()
         val resultText = findViewById<TextView>(R.id.result_text)
-        resultText.text = "Dice Rolled"
+        val random = (1..6).random()
+        resultText.text = random.toString()
     }
 }
