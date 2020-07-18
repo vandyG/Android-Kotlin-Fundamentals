@@ -48,6 +48,6 @@ class MainActivity : AppCompatActivity() {
         view.visibility = View.GONE
 
         editText.requestFocus()
-        inputMethodManager.showSoftInput(view, 0)
+        inputMethodManager.showSoftInput(editText, 0)
     }
 }
