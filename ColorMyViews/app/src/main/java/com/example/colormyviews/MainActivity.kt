@@ -18,11 +18,11 @@ class MainActivity : AppCompatActivity() {
         when (view.id) {
 
             // Boxes using Color class colors for the background
-            R.id.box_one_text -> view.setBackgroundColor(Color.DKGRAY)
-            R.id.box_two_text -> view.setBackgroundColor(Color.GRAY)
-            R.id.box_three_text -> view.setBackgroundColor(Color.BLUE)
-            R.id.box_four_text -> view.setBackgroundColor(Color.MAGENTA)
-            R.id.box_five_text -> view.setBackgroundColor(Color.BLUE)
+            R.id.box_one_text -> view.setBackgroundResource(R.drawable.blue)
+            R.id.box_two_text -> view.setBackgroundResource(R.drawable.green)
+            R.id.box_three_text -> view.setBackgroundResource(R.drawable.orange)
+            R.id.box_four_text -> view.setBackgroundResource(R.drawable.red)
+            R.id.box_five_text -> view.setBackgroundResource(R.drawable.yellow)
             else -> view.setBackgroundColor(Color.LTGRAY)
         }
     }
@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         for (item in clickableViews) {
             item.setOnClickListener { makeColored(it) }
         }
-
 
     }
 }
