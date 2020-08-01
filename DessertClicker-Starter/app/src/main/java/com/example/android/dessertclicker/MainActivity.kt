@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 //        Log.i("MainActivity", "onStart called")
+        desertTimer.startTimer()
         Timber.i("onStart called")
 
     }
@@ -105,6 +106,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        desertTimer.stopTimer()
         Timber.i("onStop called")
     }
 
