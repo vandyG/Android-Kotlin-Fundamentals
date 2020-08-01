@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             onDessertClicked()
         }
 
-        desertTimer = DessertTimer()
+        desertTimer = DessertTimer(this.lifecycle)
 
         // Set the TextViews to the right values
         binding.revenue = revenue
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 //        Log.i("MainActivity", "onStart called")
-        desertTimer.startTimer()
+//        desertTimer.startTimer()
         Timber.i("onStart called")
 
     }
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        desertTimer.stopTimer()
+//        desertTimer.stopTimer()
         Timber.i("onStop called")
     }
 
