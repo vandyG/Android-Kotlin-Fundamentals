@@ -51,36 +51,30 @@ class GameFragment : Fragment() {
 
         Log.i("GameFragment", "GameFragment Created")
 
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
+        binding.correctButton.setOnClickListener {
+            viewModel.onCorrect()
+            updateWordText()
+            updateScoreText()
+        }
+        binding.skipButton.setOnClickListener {
+            viewModel.onSkip()
+            updateWordText()
+            updateScoreText()
+        }
+
         updateScoreText()
         updateWordText()
         return binding.root
 
     }
 
-
-
-    /** Methods for buttons presses **/
-
-    private fun onSkip() {
-        score--
-        nextWord()
-    }
-
-    private fun onCorrect() {
-        score++
-        nextWord()
-    }
-
-
     /** Methods for updating the UI **/
 
     private fun updateWordText() {
-        binding.wordText.text = word
+        binding.wordText.text = viewModel.word
     }
 
     private fun updateScoreText() {
-        binding.scoreText.text = score.toString()
+        binding.scoreText.text = viewModel.score.toString()
     }
 }
