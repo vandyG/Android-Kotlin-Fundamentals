@@ -24,8 +24,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.GameFragmentBinding
@@ -35,8 +34,8 @@ import com.example.android.guesstheword.databinding.GameFragmentBinding
  */
 class GameFragment : Fragment() {
 
-    //GameViewModel
-    private val viewModel: GameViewModel by viewModels()
+    //GameViewModel has activity scope
+    private val viewModel: GameViewModel by activityViewModels ()
 
     private lateinit var binding: GameFragmentBinding
 
