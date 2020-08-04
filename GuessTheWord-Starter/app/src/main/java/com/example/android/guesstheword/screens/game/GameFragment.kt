@@ -26,7 +26,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.GameFragmentBinding
@@ -55,46 +57,53 @@ class GameFragment : Fragment() {
         Log.i("GameFragment", "GameFragment Created")
         val model: GameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
-        binding.correctButton.setOnClickListener {
-            viewModel.onCorrect()
-            updateWordText()
-            updateScoreText()
-        }
-        binding.skipButton.setOnClickListener {
-            viewModel.onSkip()
-            updateWordText()
-            updateScoreText()
+        with(binding) {
+
+            correctButton.setOnClickListener {
+                viewModel.onCorrect()
+            }
+
+            skipButton.setOnClickListener {
+                viewModel.onSkip()
+            }
+
+            endGameButton.setOnClickListener {
+                onEndGame()
+            }
         }
 
-        binding.endGameButton.setOnClickListener {
-            onEndGame()
+//        binding.correctButton.setOnClickListener {
+//            viewModel.onCorrect()
+//        }
+//        binding.skipButton.setOnClickListener {
+//            viewModel.onSkip()
+//        }
+//
+//        binding.endGameButton.setOnClickListener {
+//            onEndGame()
+//        }
+
+        viewModel.score.observe(viewLifecycleOwner) { newScore ->
+            binding.scoreText.text = newScore.toString()
         }
 
-        updateScoreText()
-        updateWordText()
+        viewModel.word.observe(viewLifecycleOwner) { newWord ->
+            binding.wordText.text = newWord
+        }
+
         return binding.root
 
     }
 
-    /** Methods for updating the UI **/
-
-    private fun updateWordText() {
-        binding.wordText.text = viewModel.word.value
-    }
-
-    private fun updateScoreText() {
-        binding.scoreText.text = viewModel.score.value.toString()
-    }
-
     /**Method called when user presses the end game button**/
-    private fun onEndGame(){
+    private fun onEndGame() {
         gameFinished()
     }
 
     /**
      * Called when the game is finished
      */
-    private fun gameFinished(){
+    private fun gameFinished() {
         Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()
         val action = GameFragmentDirections.actionGameToScore()
         action.score = viewModel.score.value ?: 0
