@@ -73,23 +73,21 @@ class GameFragment : Fragment() {
             }
         }
 
-//        binding.correctButton.setOnClickListener {
-//            viewModel.onCorrect()
-//        }
-//        binding.skipButton.setOnClickListener {
-//            viewModel.onSkip()
-//        }
-//
-//        binding.endGameButton.setOnClickListener {
-//            onEndGame()
-//        }
+        with(viewModel) {
+            score.observe(viewLifecycleOwner) { newScore ->
+                binding.scoreText.text = newScore.toString()
+            }
 
-        viewModel.score.observe(viewLifecycleOwner) { newScore ->
-            binding.scoreText.text = newScore.toString()
-        }
+            word.observe(viewLifecycleOwner) { newWord ->
+                binding.wordText.text = newWord
+            }
 
-        viewModel.word.observe(viewLifecycleOwner) { newWord ->
-            binding.wordText.text = newWord
+            eventGameFinish.observe(viewLifecycleOwner){hasFinished ->
+                if (hasFinished) {
+                    gameFinished()
+                    onGameFinishComplete()
+                }
+            }
         }
 
         return binding.root
@@ -105,9 +103,10 @@ class GameFragment : Fragment() {
      * Called when the game is finished
      */
     private fun gameFinished() {
-        Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()
         val action = GameFragmentDirections.actionGameToScore()
         action.score = viewModel.score.value ?: 0
         NavHostFragment.findNavController(this).navigate(action)
+        Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()
+
     }
 }
