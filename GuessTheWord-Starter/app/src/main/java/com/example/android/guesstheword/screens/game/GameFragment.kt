@@ -58,14 +58,11 @@ class GameFragment : Fragment() {
         Log.i("GameFragment", "GameFragment Created")
 //        val model: GameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         binding.gameViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         with(viewModel) {
             score.observe(viewLifecycleOwner) { newScore ->
                 binding.scoreText.text = newScore.toString()
-            }
-
-            word.observe(viewLifecycleOwner) { newWord ->
-                binding.wordText.text = newWord
             }
 
             eventGameFinish.observe(viewLifecycleOwner){hasFinished ->
