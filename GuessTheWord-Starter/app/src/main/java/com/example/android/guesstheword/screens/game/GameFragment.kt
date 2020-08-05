@@ -56,22 +56,8 @@ class GameFragment : Fragment() {
         )
 
         Log.i("GameFragment", "GameFragment Created")
-        val model: GameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-
-        with(binding) {
-
-            correctButton.setOnClickListener {
-                viewModel.onCorrect()
-            }
-
-            skipButton.setOnClickListener {
-                viewModel.onSkip()
-            }
-
-            endGameButton.setOnClickListener {
-                onEndGame()
-            }
-        }
+//        val model: GameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        binding.gameViewModel = viewModel
 
         with(viewModel) {
             score.observe(viewLifecycleOwner) { newScore ->
@@ -92,11 +78,6 @@ class GameFragment : Fragment() {
 
         return binding.root
 
-    }
-
-    /**Method called when user presses the end game button**/
-    private fun onEndGame() {
-        gameFinished()
     }
 
     /**

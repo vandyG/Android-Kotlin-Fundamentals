@@ -85,6 +85,10 @@ class GameViewModel : ViewModel() {
         _eventGameFinish.value = false
     }
 
+    fun onGameFinish(){
+        _eventGameFinish.value = true
+    }
+
     /**
      * Moves to the next word in the list
      */
@@ -93,7 +97,7 @@ class GameViewModel : ViewModel() {
             //Select and remove a word from the list
             _word.value = wordList.removeAt(0)
         }else{
-            _eventGameFinish.value = true
+            onGameFinish()
         }
     }
 }
