@@ -7,11 +7,14 @@ import androidx.lifecycle.ViewModel
 
 class ScoreViewModel(finalScore: Int) : ViewModel() {
     // The final score
-     val score = finalScore
+    private val _score = MutableLiveData<Int>()
+    val score: LiveData<Int>
+        get() = _score
 //    val score: LiveData<Int>
 //        get() = _score
 
     init {
+        _score.value = finalScore
         Log.i("ScoreViewModel", "Final score is $finalScore")
     }
 }
