@@ -52,9 +52,9 @@
             android:id="@+id/word_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/quote_format(gameViewModel.word)}"
             android:animateLayoutChanges="true"
             android:fontFamily="sans-serif"
+            android:text="@{@string/quote_format(gameViewModel.word)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@color/black_text_color"
             android:textSize="34sp"
@@ -74,8 +74,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@{gameViewModel.currentTimeString}"
             android:fontFamily="sans-serif"
+            android:text="@{gameViewModel.currentTimeString}"
             android:textColor="@color/grey_text_color"
             android:textSize="14sp"
             android:textStyle="normal"
@@ -89,9 +89,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{@string/score_format(gameViewModel.score)}"
             android:layout_marginEnd="8dp"
             android:fontFamily="sans-serif"
+            android:text="@{@string/score_format(gameViewModel.score)}"
             android:textColor="@color/grey_text_color"
             android:textSize="14sp"
             android:textStyle="normal"
@@ -145,6 +145,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+        <TextView
+            android:id="@+id/wordHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif"
+            android:textSize="18sp"
+            android:text="@{gameViewModel.wordHint}"
+            app:layout_constraintBottom_toTopOf="@+id/timer_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/word_text"
+            tools:text="Current word has 4 letters \n The letter at position 2 is U" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
