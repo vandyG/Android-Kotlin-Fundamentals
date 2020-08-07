@@ -16,12 +16,17 @@
 
 package com.example.android.guesstheword.screens.game
 
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -44,6 +49,7 @@ class GameFragment : Fragment() {
 
     private lateinit var binding: GameFragmentBinding
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -67,7 +73,23 @@ class GameFragment : Fragment() {
             }
         }
 
+        viewModel.eventBuzz.observe(viewLifecycleOwner){buzzType ->
+            buzz(buzzType.pattern)
+        }
+
         return binding.root
+    }
+
+    /**
+     * Method to perform buzz
+     */
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun buzz(pattern: LongArray){
+        val buzzer = activity?.getSystemService(Vibrator::class.java)
+        buzzer?.let {
+                buzzer.vibrate(VibrationEffect.createWaveform(pattern, -1))
+        }
     }
 
     /**

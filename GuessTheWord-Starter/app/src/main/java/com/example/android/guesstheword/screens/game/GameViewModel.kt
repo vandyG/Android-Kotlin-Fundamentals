@@ -44,17 +44,25 @@ class GameViewModel : ViewModel() {
     private val timer: CountDownTimer
 
     // The list of words - the front of the list is the next word to guess
-    lateinit var wordList: MutableList<String>
+    private lateinit var wordList: MutableList<String>
 
     // Event which triggers the end of the game
     private val _eventGameFinish = MutableLiveData<Boolean>()
     val eventGameFinish: LiveData<Boolean>
         get() = _eventGameFinish
 
+    //Buzz event
+    private val _eventBuzz = MutableLiveData<BuzzType>()
+    val eventBuzz: LiveData<BuzzType>
+        get() = _eventBuzz
+
     companion object {
 
         //When the game is over
         private const val DONE = 0L
+
+        // This is the time when the phone will start buzzing each second
+        private const val COUNTDOWN_PANIC_SECONDS = 3L
 
         //Countdown time interval
         private const val ONE_SECOND = 1000L
@@ -77,6 +85,9 @@ class GameViewModel : ViewModel() {
 
             override fun onTick(millisUntilFinished: Long) {
                 currentTime.value = millisUntilFinished / ONE_SECOND
+                if (millisUntilFinished/ ONE_SECOND <= COUNTDOWN_PANIC_SECONDS){
+                    _eventBuzz.value = BuzzType.COUNTDOWN_PANIC
+                }
             }
         }
 
@@ -130,6 +141,7 @@ class GameViewModel : ViewModel() {
 
     fun onCorrect() {
         _score.value = (score.value)?.plus(1)
+        _eventBuzz.value = BuzzType.CORRECT
         nextWord()
     }
 
@@ -138,8 +150,13 @@ class GameViewModel : ViewModel() {
         _eventGameFinish.value = false
     }
 
+//    fun onBuzzComplete(){
+//        _eventBuzz.value = BuzzType.NO_BUZZ
+//    }
+
     fun onGameFinish() {
         _eventGameFinish.value = true
+        _eventBuzz.value = BuzzType.GAME_OVER
     }
 
     /**
