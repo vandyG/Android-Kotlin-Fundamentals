@@ -18,6 +18,7 @@ package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
@@ -40,8 +41,17 @@ class SleepTrackerViewModel(
 
     private val nights = database.getAllNights()
 
-    val nightsString = Transformations.map(nights){nights ->
+    val nightsString = Transformations.map(nights) { nights ->
         formatNights(nights, application.resources)
+    }
+
+    private val _navigateToSleepQuality = MutableLiveData<SleepNight>()
+
+    val navigateToSleepQuality: LiveData<SleepNight>
+        get() = _navigateToSleepQuality
+
+    fun doneNavigating() {
+        _navigateToSleepQuality.value = null
     }
 
     init {
@@ -64,7 +74,7 @@ class SleepTrackerViewModel(
         }
     }
 
-    fun onStartTracking(){
+    fun onStartTracking() {
         uiScope.launch {
             val newNight = SleepNight()
             insert(newNight)
@@ -73,35 +83,36 @@ class SleepTrackerViewModel(
         }
     }
 
-    private suspend fun insert(night: SleepNight){
-        withContext(Dispatchers.IO){
+    private suspend fun insert(night: SleepNight) {
+        withContext(Dispatchers.IO) {
             database.insert(night)
         }
     }
 
-    fun onStopTracking(){
+    fun onStopTracking() {
         uiScope.launch {
             val oldNight = tonight.value ?: return@launch
             oldNight.endTimeMilli = System.currentTimeMillis()
             update(oldNight)
+            _navigateToSleepQuality.value = oldNight
         }
     }
 
     private suspend fun update(night: SleepNight) {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             database.update(night)
         }
     }
 
-    fun onClear(){
+    fun onClear() {
         uiScope.launch {
             clear()
             tonight.value = null
         }
     }
 
-    private suspend fun clear(){
-        withContext(Dispatchers.IO){
+    private suspend fun clear() {
+        withContext(Dispatchers.IO) {
             database.clear()
         }
     }
