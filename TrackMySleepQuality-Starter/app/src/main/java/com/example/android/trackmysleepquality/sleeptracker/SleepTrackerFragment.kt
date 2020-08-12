@@ -58,10 +58,17 @@ class SleepTrackerFragment : Fragment() {
         val sleepTrackerViewModel =
                 ViewModelProvider(this, viewModelFactory).get(SleepTrackerViewModel::class.java)
 
+        val adapter = SleepNightAdapter()
+
+        binding.sleepList.adapter = adapter
         binding.lifecycleOwner = this
         binding.sleepTrackerViewModel = sleepTrackerViewModel
 
-        sleepTrackerViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer {night ->
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer { nights ->
+            adapter.data = nights
+        })
+
+        sleepTrackerViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
             night?.let {
                 findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))
                 sleepTrackerViewModel.doneNavigating()
@@ -69,7 +76,7 @@ class SleepTrackerFragment : Fragment() {
         })
 
         sleepTrackerViewModel.showSnackbarEvent.observe(viewLifecycleOwner, Observer {
-            if(it){
+            if (it) {
                 Snackbar.make(requireView(), getString(R.string.cleared_message), Snackbar.LENGTH_SHORT)
                         .show()
                 sleepTrackerViewModel.doneShowingSnackbar()
