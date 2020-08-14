@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.convertDurationToFormatted
@@ -16,7 +17,7 @@ class SleepNightAdapter : RecyclerView.Adapter<ViewHolder>() {
     var data = listOf<SleepNight>()
         set(value) {
             field = value
-            notifyDataSetChanged()
+            this.notifyDataSetChanged()
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -59,5 +60,15 @@ class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(i
             5 -> R.drawable.ic_sleep_5
             else -> R.drawable.ic_sleep_active
         })
+    }
+}
+
+class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>() {
+    override fun areItemsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+        return oldItem.nightId == newItem.nightId
+    }
+
+    override fun areContentsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+        return oldItem == newItem
     }
 }
