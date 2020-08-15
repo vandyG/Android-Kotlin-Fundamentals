@@ -62,7 +62,7 @@ class SleepTrackerFragment : Fragment() {
                 ViewModelProvider(this, viewModelFactory).get(SleepTrackerViewModel::class.java)
 
         val adapter = SleepNightAdapter(SleepNightListener { sleepId ->
-            Toast.makeText(context, "$sleepId", Toast.LENGTH_LONG).show()
+            sleepTrackerViewModel.onSleepNightClicked(sleepId)
         })
 
         binding.sleepList.adapter = adapter
