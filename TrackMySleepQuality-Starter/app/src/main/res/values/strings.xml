@@ -59,4 +59,7 @@
 
     <string name="string_quality">quality</string>
 
+    <string name="header_text">Sleep Results</string>
+    <string name="close">Close</string>
+
 </resources>
