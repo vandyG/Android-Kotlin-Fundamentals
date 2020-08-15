@@ -68,7 +68,7 @@ class SleepDetailViewModel(
     /**
      * When true immediately navigate back to the [SleepTrackerFragment]
      */
-    val navigateToSleepTracker: LiveData<Boolean>
+    val navigateToSleepTracker: LiveData<Boolean?>
         get() = _navigateToSleepTracker
 
     /**

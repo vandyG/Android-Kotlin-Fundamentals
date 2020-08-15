@@ -17,6 +17,7 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -143,11 +144,12 @@ class SleepTrackerViewModel(
         viewModelJob.cancel()
     }
 
-    private val _navigateToSleepDetail = MutableLiveData<Long>()
+    private val _navigateToSleepDetail = MutableLiveData<Long?>()
     val navigateToSleepDetail
         get() = _navigateToSleepDetail
 
     fun onSleepNightClicked(id: Long) {
+        Log.i("SleepTrackerViewModel", "$id")
         _navigateToSleepDetail.value = id
     }
 

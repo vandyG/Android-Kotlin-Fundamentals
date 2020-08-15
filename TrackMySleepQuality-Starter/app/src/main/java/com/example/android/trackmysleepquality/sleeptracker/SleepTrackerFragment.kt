@@ -17,6 +17,7 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -87,6 +88,15 @@ class SleepTrackerFragment : Fragment() {
                 Snackbar.make(requireView(), getString(R.string.cleared_message), Snackbar.LENGTH_SHORT)
                         .show()
                 sleepTrackerViewModel.doneShowingSnackbar()
+            }
+        })
+
+        sleepTrackerViewModel.navigateToSleepDetail.observe(viewLifecycleOwner, Observer { nightId ->
+            Log.i("SleepTrackerFragment", "$nightId")
+            nightId?.let {
+                findNavController().navigate(SleepTrackerFragmentDirections
+                        .actionSleepTrackerFragmentToSleepDetail(nightId))
+                sleepTrackerViewModel.onSleepDetailNavigated()
             }
         })
 
