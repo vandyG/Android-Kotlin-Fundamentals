@@ -73,7 +73,7 @@ class SleepTrackerFragment : Fragment() {
         binding.sleepList.layoutManager = GridLayoutManager(activity, 3)
 
         sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer { nights ->
-            adapter.submitList(nights)
+            adapter.addHeaderAndSubmitList(nights)
         })
 
         sleepTrackerViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
