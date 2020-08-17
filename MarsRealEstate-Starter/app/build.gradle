@@ -39,6 +39,10 @@ android {
     buildFeatures {
         dataBinding true
     }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
@@ -59,4 +63,9 @@ dependencies {
 
     // Core with Ktx
     implementation "androidx.core:core-ktx:$version_core"
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-scalars:$version_retrofit"
 }
